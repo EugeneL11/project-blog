@@ -17,9 +17,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-async function BlogPost(props) {
-  const params = await props.params;
-  const { frontmatter, content } = await loadBlogPost(params.postSlug);
+async function BlogPost({ params }) {
+  const { postSlug } = await params;
+  const { frontmatter, content } = await loadBlogPost(postSlug);
 
   return (
     <article className={styles.wrapper}>
