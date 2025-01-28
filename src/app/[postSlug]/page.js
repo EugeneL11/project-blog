@@ -5,7 +5,7 @@ import BlogHero from '@/components/BlogHero';
 import styles from './postSlug.module.css';
 import { loadBlogPost } from '@/helpers/file-helpers';
 import { BLOG_TITLE } from '@/constants';
-import CodeSnippet from '@/components/CodeSnippet';
+import COMPONENTS_MAP from '@/helpers/mdx-components';
 
 export async function generateMetadata({ params }) {
   const { postSlug } = await params;
@@ -17,7 +17,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
-async function BlogPost({ params }) {
+async function BlogPost(props) {
+  const params = await props.params;
   const { frontmatter, content } = await loadBlogPost(params.postSlug);
 
   return (
@@ -29,9 +30,7 @@ async function BlogPost({ params }) {
       <div className={styles.page}>
         <MDXRemote 
           source={content} 
-          components={{
-            pre: CodeSnippet,
-          }}
+          components={COMPONENTS_MAP}
         />
       </div>
     </article>
